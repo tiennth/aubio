@@ -19,7 +19,7 @@
 */
 
 #include "config.h"
-
+#include "math.h"
 #ifdef HAVE_SOURCE_APPLE_AUDIO
 
 #include "aubio_priv.h"
@@ -225,11 +225,12 @@ void aubio_source_apple_audio_do(aubio_source_apple_audio_t *s, fvec_t * read_to
       buf[v] = 0.;
     }
   }
-
+    
   *read = (uint_t)loadedPackets;
   return;
 beach:
   *read = 0;
+    
   return;
 }
 

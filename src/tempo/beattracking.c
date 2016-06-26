@@ -22,6 +22,7 @@
 #include "fvec.h"
 #include "mathutils.h"
 #include "tempo/beattracking.h"
+#include "math.h"
 
 /** define to 1 to print out tracking difficulties */
 #define AUBIO_BEAT_WARNINGS 0
@@ -126,7 +127,6 @@ void
 aubio_beattracking_do (aubio_beattracking_t * bt, const fvec_t * dfframe,
     fvec_t * output)
 {
-
   uint_t i, k;
   uint_t step = bt->step;
   uint_t laglen = bt->rwv->length;
@@ -145,7 +145,7 @@ aubio_beattracking_do (aubio_beattracking_t * bt, const fvec_t * dfframe,
   fvec_copy (dfframe, bt->dfrev);
   fvec_weight (bt->dfrev, bt->dfwv);
   fvec_rev (bt->dfrev);
-
+    
   /* compute autocorrelation function */
   aubio_autocorr (dfframe, bt->acf);
 
@@ -202,8 +202,22 @@ aubio_beattracking_do (aubio_beattracking_t * bt, const fvec_t * dfframe,
       bt->phout->data[i] += bt->dfrev->data[i + (uint_t) ROUND (bp * k)];
     }
   }
-  fvec_weight (bt->phout, bt->phwv);
 
+    printf("come here 444\n");
+    for (uint_t i = 0; i < bt->phout->length; i++) {
+        if (isnan(bt->phout->data[i])) {
+            printf("**** bt->phout has nan in dfframe\n");
+        }
+    }
+    
+    fvec_weight (bt->phout, bt->phwv);
+    printf("come here 555\n");
+    for (uint_t i = 0; i < bt->phout->length; i++) {
+        if (isnan(bt->phout->data[i])) {
+            printf("**** bt->phout has nan in dfframe\n");
+        }
+    }
+    
   /* find Rayleigh period */
   maxindex = fvec_max_elem (bt->phout);
   if (maxindex >= winlen - 1) {

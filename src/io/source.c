@@ -60,6 +60,7 @@ struct _aubio_source_t {
 aubio_source_t * new_aubio_source(const char_t * uri, uint_t samplerate, uint_t hop_size) {
   aubio_source_t * s = AUBIO_NEW(aubio_source_t);
 #ifdef HAVE_LIBAV
+    printf("HAVE_LIBAV\n\n\n");
   s->source = (void *)new_aubio_source_avcodec(uri, samplerate, hop_size);
   if (s->source) {
     s->s_do = (aubio_source_do_t)(aubio_source_avcodec_do);
@@ -75,7 +76,9 @@ aubio_source_t * new_aubio_source(const char_t * uri, uint_t samplerate, uint_t 
 #endif /* HAVE_LIBAV */
 #ifdef HAVE_SOURCE_APPLE_AUDIO
   s->source = (void *)new_aubio_source_apple_audio(uri, samplerate, hop_size);
+    printf("HAVE_SOURCE_APPLE_AUDIO\n\n\n");
   if (s->source) {
+      
     s->s_do = (aubio_source_do_t)(aubio_source_apple_audio_do);
     s->s_do_multi = (aubio_source_do_multi_t)(aubio_source_apple_audio_do_multi);
     s->s_get_channels = (aubio_source_get_channels_t)(aubio_source_apple_audio_get_channels);
@@ -88,6 +91,7 @@ aubio_source_t * new_aubio_source(const char_t * uri, uint_t samplerate, uint_t 
   }
 #endif /* HAVE_SOURCE_APPLE_AUDIO */
 #ifdef HAVE_SNDFILE
+    printf("HAVE_SNDFILE\n\n\n");
   s->source = (void *)new_aubio_source_sndfile(uri, samplerate, hop_size);
   if (s->source) {
     s->s_do = (aubio_source_do_t)(aubio_source_sndfile_do);
@@ -102,6 +106,7 @@ aubio_source_t * new_aubio_source(const char_t * uri, uint_t samplerate, uint_t 
   }
 #endif /* HAVE_SNDFILE */
 #ifdef HAVE_WAVREAD
+    printf("HAVE_WAVREAD\n\n\n");
   s->source = (void *)new_aubio_source_wavread(uri, samplerate, hop_size);
   if (s->source) {
     s->s_do = (aubio_source_do_t)(aubio_source_wavread_do);
