@@ -25,7 +25,6 @@
 #include "mathutils.h"
 #include "musicutils.h"
 #include "config.h"
-#include "math.h"
 
 /** Window types */
 typedef enum
@@ -452,12 +451,6 @@ smpl_t fvec_quadratic_peak_pos (const fvec_t * x, uint_t pos) {
   s0 = x->data[x0];
   s1 = x->data[pos];
   s2 = x->data[x2];
-    
-    if (isnan(s0) || isnan(s1) || isnan(s2)) {
-        for (uint_t i = 0; i < x->length; i++) {
-            printf(">> %d %f\n", i, x->data[i]);
-        }
-    }
     if (s0 - two * s1 + s2 == 0) return 0.;
   return pos + half * (s0 - s2 ) / (s0 - two * s1 + s2);
 }

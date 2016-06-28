@@ -203,18 +203,10 @@ aubio_beattracking_do (aubio_beattracking_t * bt, const fvec_t * dfframe,
     }
   }
 
-    printf("come here 444\n");
-    for (uint_t i = 0; i < bt->phout->length; i++) {
-        if (isnan(bt->phout->data[i])) {
-            printf("**** bt->phout has nan in dfframe\n");
-        }
-    }
-    
     fvec_weight (bt->phout, bt->phwv);
-    printf("come here 555\n");
     for (uint_t i = 0; i < bt->phout->length; i++) {
         if (isnan(bt->phout->data[i])) {
-            printf("**** bt->phout has nan in dfframe\n");
+            bt->phout->data[i] = 0.;
         }
     }
     
